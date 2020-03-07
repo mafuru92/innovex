@@ -1,0 +1,63 @@
+Install PHP7 and Composer on Windows 10
+PHP7 is a general purpose scripting language well suited for web development. Composer is the defacto package manager for PHP7. 
+This tutorial will show you how to install PHP7 and Composer on Windows 10 for use in a command prompt.
+A common misconception is that you need a web server like IIS, Apache, or Nginx to get started with PHP7 development. In fact, 
+PHP7 has its own built in web server that you can invoke at the command prompt. Modern PHP frameworks such as Opulence, 
+Symfony, Cake, Laravel, WordPress, and many more support this.
+
+Installing PHP7
+Download the latest PHP7 (non-thread safe version) zip file from http://windows.php.net/
+Extract the contents of the zip file into C:\PHP7
+Copy C:\PHP7\php.ini-development to C:\PHP7\php.ini
+Open the newly copied C:\PHP7\php.ini in a text editor.
+Scroll down to “Directory in which the loadable extensions (modules) reside.” and uncomment: extension_dir = “ext”
+ Notepad++ is great.
+Scroll down to the DLL extensions section and uncomment the extensions you want to use.
+ My current setup.
+Tweak other settings as needed.
+
+Note: Don’t forget to keep your php.ini file in a safe place when you upgrade in the future!
+
+Add C:\PHP7 to the Windows 10 system path environment variable.
+ Windows 10 has finally improved this interface, yay!
+In a command prompt test that the installation is successful by typing php -v
+ ConEmu is great.
+
+Installing Composer
+On my computer I’ve created a C:\Users\dac514\bin directory where I keep miscellaneous executables. This directory is in my user path.
+ 
+Use a search engine to find a tutorial and do something similar. Optionally install composer in the C:\PHP7 directory you just created as it’s already in your path.
+To get composer.phar, drop to a command prompt, cd into your target directory, and run:
+1
+2
+3 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
+(Important! Click here for a more secure and up-to-date install snippet.)
+Next, create a new composer.bat file alongside the composer.phar file so that Windows 10 can execute it more easily. (Source)
+1 echo @php "%~dp0composer.phar" %*>composer.bat
+Test that it’s working by typing composer -V 
+ ConEmu is still great.
+
+Starting Laravel run “php artisan serve” then in the browser run http://localhost:8000/
+
+To create Login and Register in the page run “artisan make:auth”
+To create a database run “php artisan migrate” then you can be able to register as a new user or login.
+More documentation on the Laravel migration go to https://laravel.com/docs/5.5/migrations
+To create a table in Laravel  “php artisan make:migration create_companies_table” 
+Run the below commands if you want the migration to create tables
+C:\xampp\htdocs\LaravelProject\laravelproject>php artisan migrate
+If you get the error below go to App-> Providers->appserviceproviders make sure it look like below. Then go and run the migrate again.
+public function boot()
+    {
+        //
+       Schema::defaultStringLength(191);
+    }
+In Connection.php line 664:
+  SQLSTATE[42000]: Syntax error or access violation: 1166 Incorrect column name 'user_id ' (SQL: create table `companies` (`id` int unsigned not null auto_increment primary key, `name` varchar(255) not null, `description` longtext null, `user_id ` int unsigned not null, `created_at` timestamp null, `updated_at` timestamp null) default character set utf8mb4 collate utf8mb4_unicode_ci)
+In Connection.php line 458:
+  SQLSTATE[42000]: Syntax error or access violation: 1166 Incorrect column name 'user_id '
+
+To get bootstrap go to the url below and find your template that you need
+http://getbootstrap.com/docs/3.3/getting-started/
+
